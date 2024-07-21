@@ -94,3 +94,5 @@ export const pallet = {
   neutral_variant_99: "#FDFBFF",
   neutral_variant_100: "#FFFFFF",
 } as const;
+
+export type Pallet = keyof typeof pallet;
