@@ -35,17 +35,17 @@ export const MyButton = (props: MyButtonProps) => {
 
   let defaultBtnBgColor = "#5177B8";
   let defaultTxtColor = "#FFFFFF";
-  let defaultSize = "sm";
 
   let container: StyleProp<ViewStyle> = {
-    paddingVertical: spacing[size] || spacing[defaultSize],
-    paddingHorizontal: spacing[size] || spacing[defaultSize],
-    borderRadius: spacing[size] * 2 || spacing[defaultSize] * 2,
+    paddingVertical: spacing[size] || spacing.sm,
+    paddingHorizontal: spacing[size] || spacing.sm,
+    borderRadius: spacing[size] * 2 || spacing.sm * 2,
     backgroundColor: pallet[bgColor] || defaultBtnBgColor,
+    alignItems: "center",
   };
 
   let textStyle: StyleProp<TextStyle> = {
-    fontSize: spacing[size] || spacing[defaultSize],
+    fontSize: spacing[size] || spacing.sm,
     color: pallet[textColor] || defaultTxtColor,
   };
 

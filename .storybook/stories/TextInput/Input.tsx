@@ -18,7 +18,7 @@ export type InputProps = {
   textInputProps?: TextInputProps;
   placeholderTextColor?: ColorPallet;
   inputTxtColor?: ColorPallet;
-  inputStyle: StyleProp<TextStyle>;
+  inputStyle?: StyleProp<TextStyle>;
 };
 
 export const Input = (props: InputProps) => {
