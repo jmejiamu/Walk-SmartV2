@@ -1,37 +1,33 @@
+import React from "react";
 import {
   Image,
   SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import { MyButton } from "../../../.storybook/stories/Button/Button";
 import { Input } from "../../../.storybook/stories/TextInput/Input";
 import { fontSize, pallet, spacing } from "../../themes";
-import { MyButton } from "../../../.storybook/stories/Button/Button";
+import { useForm } from "../../hooks";
 
 export const RegisterScreen = () => {
-  const [username, setUsername] = useState("");
-  const handleTextChange = (text: string) => {
-    setUsername(text);
+  const initState = {
+    name: "",
+    email: "",
+    password: "",
   };
+
+  const { formData, handleChange, resetForm } = useForm(initState);
 
   let logo = require("../../../assets/logo.png");
   return (
-    <SafeAreaView style={{}}>
+    <SafeAreaView>
       <StatusBar hidden={true} />
-      <View style={{ marginHorizontal: spacing.md }}>
-        <Image
-          style={{
-            height: 175,
-            width: 175,
-            alignSelf: "center",
-          }}
-          source={logo}
-        />
+      <View style={styles.mainContainer}>
+        <Image style={styles.img} source={logo} />
         <Text style={styles.titleStyle}>Hey,👋{"\n"}Welcome to WalkSmart </Text>
         <Text style={styles.subTitleStyle}>Create your account</Text>
         <Input
@@ -42,8 +38,8 @@ export const RegisterScreen = () => {
           size="md"
           inputStyle={{ marginBottom: spacing.l }}
           textInputProps={{
-            value: username,
-            onChangeText: handleTextChange,
+            value: formData.name,
+            onChangeText: (text) => handleChange("name", text),
           }}
         />
         <Input
@@ -54,8 +50,8 @@ export const RegisterScreen = () => {
           size="md"
           inputStyle={{ marginBottom: spacing.l }}
           textInputProps={{
-            value: username,
-            onChangeText: handleTextChange,
+            value: formData.email,
+            onChangeText: (text) => handleChange("email", text),
           }}
         />
         <Input
@@ -65,8 +61,8 @@ export const RegisterScreen = () => {
           inputTxtColor="primary_15"
           size="md"
           textInputProps={{
-            value: username,
-            onChangeText: handleTextChange,
+            value: formData.password,
+            onChangeText: (text) => handleChange("password", text),
           }}
         />
 
@@ -78,29 +74,9 @@ export const RegisterScreen = () => {
           containerStyle={{ marginTop: spacing.l }}
         />
         <View style={styles.container}>
-          <Text
-            style={{
-              color: pallet.primary_15,
-              fontSize: fontSize.md,
-              marginTop: spacing.l,
-            }}
-          >
-            Do you have an account?
-          </Text>
-          <TouchableOpacity
-            style={{
-              justifyContent: "flex-end",
-            }}
-          >
-            <Text
-              style={{
-                color: pallet.primary_15,
-                fontSize: fontSize.md,
-                fontWeight: "600",
-              }}
-            >
-              Sign in
-            </Text>
+          <Text style={styles.footerTxt}>Do you have an account?</Text>
+          <TouchableOpacity style={styles.innerFooterTxtContainer}>
+            <Text style={styles.innerTxt}>Sign in</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -109,6 +85,27 @@ export const RegisterScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    marginHorizontal: spacing.md,
+  },
+  innerTxt: {
+    color: pallet.primary_15,
+    fontSize: fontSize.md,
+    fontWeight: "600",
+  },
+  innerFooterTxtContainer: {
+    justifyContent: "flex-end",
+  },
+  footerTxt: {
+    color: pallet.primary_15,
+    fontSize: fontSize.md,
+    marginTop: spacing.l,
+  },
+  img: {
+    height: 175,
+    width: 175,
+    alignSelf: "center",
+  },
   titleStyle: {
     fontSize: fontSize.xxl,
     color: pallet.primary_15,
