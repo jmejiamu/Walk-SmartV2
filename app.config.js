@@ -26,6 +26,7 @@ module.exports = {
       },
       package: "com.anonymous.smartwalk",
     },
+    plugins: ["expo-localization"],
     web: {
       favicon: "./assets/favicon.png",
     },
