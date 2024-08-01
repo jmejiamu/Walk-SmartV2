@@ -11,10 +11,15 @@ import {
 import { MyButton } from "../../../.storybook/stories/Button/Button";
 import { Input } from "../../../.storybook/stories/TextInput/Input";
 import { fontSize, pallet, spacing } from "../../themes";
-import { useForm } from "../../hooks";
 import { translate } from "../../i18n/i18n";
+import { useForm } from "../../hooks";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../redux";
+import { authUser } from "../../redux/auth/authSlice";
 
 export const RegisterScreen = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const initState = {
     name: "",
     email: "",
@@ -22,6 +27,22 @@ export const RegisterScreen = () => {
   };
 
   const { formData, handleChange, resetForm } = useForm(initState);
+
+  const { user } = useSelector((state: RootState) => state.userAuth);
+
+  const handleSubmit = () => {
+    try {
+      dispatch(
+        authUser({
+          fullName: formData.name,
+          email: formData.email,
+          password: formData.password,
+          path: "/register",
+        })
+      );
+      resetForm();
+    } catch (error) {}
+  };
 
   let logo = require("../../../assets/logo.png");
   return (
@@ -78,6 +99,7 @@ export const RegisterScreen = () => {
           textColor="primary_15"
           bgColor="primary_60"
           containerStyle={{ marginTop: spacing.l }}
+          onPress={handleSubmit}
         />
         <View style={styles.container}>
           <Text style={styles.footerTxt}>

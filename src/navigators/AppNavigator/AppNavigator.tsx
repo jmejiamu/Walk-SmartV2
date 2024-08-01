@@ -4,9 +4,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationProp } from "@react-navigation/native";
 import { RegisterScreen } from "../../screens";
 import { pallet } from "../../themes";
+import { HomeScreen } from "../../screens/HomeSceren";
 
 export type AppStackParamList = {
   Register: undefined;
+  Home: undefined;
 };
 // export type Navigation = NavigationProp<RootStacksParams>;
 const Stack = createStackNavigator<AppStackParamList>();
@@ -21,6 +23,14 @@ export const AppNavigator = () => {
         }}
         name="Register"
         component={RegisterScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          cardStyle: { backgroundColor: pallet.primary_95 },
+        }}
+        name="Home"
+        component={HomeScreen}
       />
     </Stack.Navigator>
   );
