@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux";
 import { authUser } from "../../redux/auth/authSlice";
+import { log } from "../../utils";
 
 export const RegisterScreen = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -41,7 +42,9 @@ export const RegisterScreen = () => {
         })
       );
       resetForm();
-    } catch (error) {}
+    } catch (error) {
+      log.error(error);
+    }
   };
 
   let logo = require("../../../assets/logo.png");

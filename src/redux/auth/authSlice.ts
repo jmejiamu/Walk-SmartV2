@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { log } from "../../utils";
 
 export interface UserData {
   fullName?: string;
@@ -24,6 +25,7 @@ export const authUser = createAsyncThunk(
       const data = await response.json();
       return data;
     } catch (error) {
+      log.error(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
