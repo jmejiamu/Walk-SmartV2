@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Image,
   SafeAreaView,
@@ -8,42 +7,38 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { MyButton } from "../../../.storybook/stories/Button/Button";
+import React from "react";
 import { Input } from "../../../.storybook/stories/TextInput/Input";
+import { MyButton } from "../../../.storybook/stories/Button/Button";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { useNavigation } from "@react-navigation/native";
 import { fontSize, pallet, spacing } from "../../themes";
-import { useDispatch, useSelector } from "react-redux";
 import { authUser } from "../../redux/auth/authSlice";
-import { AppDispatch, RootState } from "../../redux";
-import { translate } from "../../i18n/i18n";
+import { AppStackParamList } from "../../navigators";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../redux";
+import { translate } from "../../i18n";
 import { useForm } from "../../hooks";
 import { log } from "../../utils";
-import { useNavigation } from "@react-navigation/native";
-import { AppStackParamList } from "../../navigators";
-import { StackNavigationProp } from "@react-navigation/stack";
 
-type RegisterScreenNavigationProp = StackNavigationProp<AppStackParamList>;
+type SignInScreenNavigationProp = StackNavigationProp<AppStackParamList>;
 
-export const RegisterScreen = () => {
-  const navigation = useNavigation<RegisterScreenNavigationProp>();
+export const SignInScreen = () => {
+  const navigation = useNavigation<SignInScreenNavigationProp>();
   const dispatch = useDispatch<AppDispatch>();
   const initState = {
-    name: "",
     email: "",
     password: "",
   };
-
   const { formData, handleChange, resetForm } = useForm(initState);
-
-  const { user } = useSelector((state: RootState) => state.userAuth);
 
   const handleSubmit = () => {
     try {
       dispatch(
         authUser({
-          fullName: formData.name,
           email: formData.email,
           password: formData.password,
-          path: "/register",
+          path: "/signin",
         })
       );
       resetForm();
@@ -51,7 +46,6 @@ export const RegisterScreen = () => {
       log.error(error);
     }
   };
-
   let logo = require("../../../assets/logo.png");
   return (
     <SafeAreaView>
@@ -59,27 +53,14 @@ export const RegisterScreen = () => {
       <View style={styles.mainContainer}>
         <Image style={styles.img} source={logo} />
 
-        <Text style={styles.titleStyle}>
-          {translate("registerScreen.title")}
-        </Text>
+        <Text style={styles.titleStyle}>{translate("loginScreen.title")}</Text>
         <Text style={styles.subTitleStyle}>
-          {translate("registerScreen.subTitle")}
+          {translate("loginScreen.subTitle")}
         </Text>
+
         <Input
           bgColor="primary_90"
-          placeholder={translate("registerScreen.inputName")}
-          placeholderTextColor="secondary_35"
-          inputTxtColor="primary_15"
-          size="md"
-          inputStyle={{ marginBottom: spacing.l }}
-          textInputProps={{
-            value: formData.name,
-            onChangeText: (text) => handleChange("name", text),
-          }}
-        />
-        <Input
-          bgColor="primary_90"
-          placeholder={translate("registerScreen.inputEmail")}
+          placeholder={translate("loginScreen.inputEmail")}
           placeholderTextColor="secondary_35"
           inputTxtColor="primary_15"
           size="md"
@@ -91,7 +72,7 @@ export const RegisterScreen = () => {
         />
         <Input
           bgColor="primary_90"
-          placeholder={translate("registerScreen.inputPassword")}
+          placeholder={translate("loginScreen.inputPassword")}
           placeholderTextColor="secondary_35"
           inputTxtColor="primary_15"
           size="md"
@@ -103,7 +84,7 @@ export const RegisterScreen = () => {
         />
 
         <MyButton
-          text={translate("registerScreen.button")}
+          text={translate("loginScreen.button")}
           size="md"
           textColor="primary_15"
           bgColor="primary_60"
@@ -112,14 +93,14 @@ export const RegisterScreen = () => {
         />
         <View style={styles.container}>
           <Text style={styles.footerTxt}>
-            {translate("registerScreen.footerText")}
+            {translate("loginScreen.footerText")}
           </Text>
           <TouchableOpacity
-            onPress={() => navigation.navigate("SignIn")}
+            onPress={() => navigation.navigate("Register")}
             style={styles.innerFooterTxtContainer}
           >
             <Text style={styles.innerTxt}>
-              {translate("registerScreen.signIn")}
+              {translate("loginScreen.signUp")}
             </Text>
           </TouchableOpacity>
         </View>

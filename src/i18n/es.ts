@@ -11,6 +11,15 @@ const es: Translations = {
     signIn: "Iniciar sesión",
     button: "Registrarse",
   },
+  loginScreen: {
+    title: `Hey,👋${"\n"}Bienvenido de vuelta`,
+    subTitle: "Inicia sesión en tu cuenta",
+    inputEmail: "Correo",
+    inputPassword: "Contraseña",
+    footerText: "¿No tienes una cuenta?",
+    signUp: "Registrarse",
+    button: "Iniciar sesión",
+  },
 };
 
 export default es;
