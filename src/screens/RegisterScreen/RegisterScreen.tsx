@@ -20,6 +20,7 @@ import { log } from "../../utils";
 import { useNavigation } from "@react-navigation/native";
 import { AppStackParamList } from "../../navigators";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { AnimationWrapper } from "../../components";
 
 type RegisterScreenNavigationProp = StackNavigationProp<AppStackParamList>;
 
@@ -55,75 +56,77 @@ export const RegisterScreen = () => {
   let logo = require("../../../assets/logo.png");
   return (
     <SafeAreaView>
-      <StatusBar hidden={true} />
-      <View style={styles.mainContainer}>
-        <Image style={styles.img} source={logo} />
+      <AnimationWrapper duration={1000}>
+        <StatusBar hidden={true} />
+        <View style={styles.mainContainer}>
+          <Image style={styles.img} source={logo} />
 
-        <Text style={styles.titleStyle}>
-          {translate("registerScreen.title")}
-        </Text>
-        <Text style={styles.subTitleStyle}>
-          {translate("registerScreen.subTitle")}
-        </Text>
-        <Input
-          bgColor="primary_90"
-          placeholder={translate("registerScreen.inputName")}
-          placeholderTextColor="secondary_35"
-          inputTxtColor="primary_15"
-          size="md"
-          inputStyle={{ marginBottom: spacing.l }}
-          textInputProps={{
-            value: formData.name,
-            onChangeText: (text) => handleChange("name", text),
-          }}
-        />
-        <Input
-          bgColor="primary_90"
-          placeholder={translate("registerScreen.inputEmail")}
-          placeholderTextColor="secondary_35"
-          inputTxtColor="primary_15"
-          size="md"
-          inputStyle={{ marginBottom: spacing.l }}
-          textInputProps={{
-            value: formData.email,
-            onChangeText: (text) => handleChange("email", text),
-          }}
-        />
-        <Input
-          bgColor="primary_90"
-          placeholder={translate("registerScreen.inputPassword")}
-          placeholderTextColor="secondary_35"
-          inputTxtColor="primary_15"
-          size="md"
-          textInputProps={{
-            value: formData.password,
-            onChangeText: (text) => handleChange("password", text),
-            secureTextEntry: true,
-          }}
-        />
-
-        <MyButton
-          text={translate("registerScreen.button")}
-          size="md"
-          textColor="primary_15"
-          bgColor="primary_60"
-          containerStyle={{ marginTop: spacing.l }}
-          onPress={handleSubmit}
-        />
-        <View style={styles.container}>
-          <Text style={styles.footerTxt}>
-            {translate("registerScreen.footerText")}
+          <Text style={styles.titleStyle}>
+            {translate("registerScreen.title")}
           </Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("SignIn")}
-            style={styles.innerFooterTxtContainer}
-          >
-            <Text style={styles.innerTxt}>
-              {translate("registerScreen.signIn")}
+          <Text style={styles.subTitleStyle}>
+            {translate("registerScreen.subTitle")}
+          </Text>
+          <Input
+            bgColor="primary_90"
+            placeholder={translate("registerScreen.inputName")}
+            placeholderTextColor="secondary_35"
+            inputTxtColor="primary_15"
+            size="md"
+            inputStyle={{ marginBottom: spacing.l }}
+            textInputProps={{
+              value: formData.name,
+              onChangeText: (text) => handleChange("name", text),
+            }}
+          />
+          <Input
+            bgColor="primary_90"
+            placeholder={translate("registerScreen.inputEmail")}
+            placeholderTextColor="secondary_35"
+            inputTxtColor="primary_15"
+            size="md"
+            inputStyle={{ marginBottom: spacing.l }}
+            textInputProps={{
+              value: formData.email,
+              onChangeText: (text) => handleChange("email", text),
+            }}
+          />
+          <Input
+            bgColor="primary_90"
+            placeholder={translate("registerScreen.inputPassword")}
+            placeholderTextColor="secondary_35"
+            inputTxtColor="primary_15"
+            size="md"
+            textInputProps={{
+              value: formData.password,
+              onChangeText: (text) => handleChange("password", text),
+              secureTextEntry: true,
+            }}
+          />
+
+          <MyButton
+            text={translate("registerScreen.button")}
+            size="md"
+            textColor="primary_15"
+            bgColor="primary_60"
+            containerStyle={{ marginTop: spacing.l }}
+            onPress={handleSubmit}
+          />
+          <View style={styles.container}>
+            <Text style={styles.footerTxt}>
+              {translate("registerScreen.footerText")}
             </Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("SignIn")}
+              style={styles.innerFooterTxtContainer}
+            >
+              <Text style={styles.innerTxt}>
+                {translate("registerScreen.signIn")}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </AnimationWrapper>
     </SafeAreaView>
   );
 };

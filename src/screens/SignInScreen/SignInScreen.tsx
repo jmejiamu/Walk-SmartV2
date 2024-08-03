@@ -20,6 +20,7 @@ import { AppDispatch } from "../../redux";
 import { translate } from "../../i18n";
 import { useForm } from "../../hooks";
 import { log } from "../../utils";
+import { AnimationWrapper } from "../../components";
 
 type SignInScreenNavigationProp = StackNavigationProp<AppStackParamList>;
 
@@ -49,62 +50,66 @@ export const SignInScreen = () => {
   let logo = require("../../../assets/logo.png");
   return (
     <SafeAreaView>
-      <StatusBar hidden={true} />
-      <View style={styles.mainContainer}>
-        <Image style={styles.img} source={logo} />
+      <AnimationWrapper duration={1000}>
+        <StatusBar hidden={true} />
+        <View style={styles.mainContainer}>
+          <Image style={styles.img} source={logo} />
 
-        <Text style={styles.titleStyle}>{translate("loginScreen.title")}</Text>
-        <Text style={styles.subTitleStyle}>
-          {translate("loginScreen.subTitle")}
-        </Text>
-
-        <Input
-          bgColor="primary_90"
-          placeholder={translate("loginScreen.inputEmail")}
-          placeholderTextColor="secondary_35"
-          inputTxtColor="primary_15"
-          size="md"
-          inputStyle={{ marginBottom: spacing.l }}
-          textInputProps={{
-            value: formData.email,
-            onChangeText: (text) => handleChange("email", text),
-          }}
-        />
-        <Input
-          bgColor="primary_90"
-          placeholder={translate("loginScreen.inputPassword")}
-          placeholderTextColor="secondary_35"
-          inputTxtColor="primary_15"
-          size="md"
-          textInputProps={{
-            value: formData.password,
-            onChangeText: (text) => handleChange("password", text),
-            secureTextEntry: true,
-          }}
-        />
-
-        <MyButton
-          text={translate("loginScreen.button")}
-          size="md"
-          textColor="primary_15"
-          bgColor="primary_60"
-          containerStyle={{ marginTop: spacing.l }}
-          onPress={handleSubmit}
-        />
-        <View style={styles.container}>
-          <Text style={styles.footerTxt}>
-            {translate("loginScreen.footerText")}
+          <Text style={styles.titleStyle}>
+            {translate("loginScreen.title")}
           </Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Register")}
-            style={styles.innerFooterTxtContainer}
-          >
-            <Text style={styles.innerTxt}>
-              {translate("loginScreen.signUp")}
+          <Text style={styles.subTitleStyle}>
+            {translate("loginScreen.subTitle")}
+          </Text>
+
+          <Input
+            bgColor="primary_90"
+            placeholder={translate("loginScreen.inputEmail")}
+            placeholderTextColor="secondary_35"
+            inputTxtColor="primary_15"
+            size="md"
+            inputStyle={{ marginBottom: spacing.l }}
+            textInputProps={{
+              value: formData.email,
+              onChangeText: (text) => handleChange("email", text),
+            }}
+          />
+          <Input
+            bgColor="primary_90"
+            placeholder={translate("loginScreen.inputPassword")}
+            placeholderTextColor="secondary_35"
+            inputTxtColor="primary_15"
+            size="md"
+            textInputProps={{
+              value: formData.password,
+              onChangeText: (text) => handleChange("password", text),
+              secureTextEntry: true,
+            }}
+          />
+
+          <MyButton
+            text={translate("loginScreen.button")}
+            size="md"
+            textColor="primary_15"
+            bgColor="primary_60"
+            containerStyle={{ marginTop: spacing.l }}
+            onPress={handleSubmit}
+          />
+          <View style={styles.container}>
+            <Text style={styles.footerTxt}>
+              {translate("loginScreen.footerText")}
             </Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Register")}
+              style={styles.innerFooterTxtContainer}
+            >
+              <Text style={styles.innerTxt}>
+                {translate("loginScreen.signUp")}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </AnimationWrapper>
     </SafeAreaView>
   );
 };
