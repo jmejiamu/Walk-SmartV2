@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Image,
   SafeAreaView,
@@ -12,7 +12,7 @@ import { MyButton } from "../../../.storybook/stories/Button/Button";
 import { Input } from "../../../.storybook/stories/TextInput/Input";
 import { fontSize, pallet, spacing } from "../../themes";
 import { useDispatch, useSelector } from "react-redux";
-import { authUser } from "../../redux/auth/authSlice";
+import { authUser, clearUserState } from "../../redux/auth/authSlice";
 import { AppDispatch, RootState } from "../../redux";
 import { translate } from "../../i18n/i18n";
 import { useForm } from "../../hooks";
@@ -21,6 +21,7 @@ import { useNavigation } from "@react-navigation/native";
 import { AppStackParamList } from "../../navigators";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AnimationWrapper } from "../../components";
+import { isAuth } from "../../redux/verifyAuthentication/verifyAuthentication";
 
 type RegisterScreenNavigationProp = StackNavigationProp<AppStackParamList>;
 
@@ -35,7 +36,9 @@ export const RegisterScreen = () => {
 
   const { formData, handleChange, resetForm } = useForm(initState);
 
-  const { user } = useSelector((state: RootState) => state.userAuth);
+  const { error, loading, record } = useSelector(
+    (state: RootState) => state.userAuth
+  );
 
   const handleSubmit = () => {
     try {
@@ -52,6 +55,10 @@ export const RegisterScreen = () => {
       log.error(error);
     }
   };
+
+  useEffect(() => {
+    dispatch(isAuth());
+  }, [dispatch]);
 
   let logo = require("../../../assets/logo.png");
   return (
