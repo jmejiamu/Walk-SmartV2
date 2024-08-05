@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { log } from "../../utils";
 
@@ -7,6 +8,31 @@ export interface UserData {
   password: string;
   path: string;
 }
+
+interface AuthRecord {
+  created: string;
+  fail: boolean;
+  token: string;
+  user_id: string;
+  username: string;
+}
+interface InitialState {
+  loading: boolean;
+  error: string | string;
+  record: AuthRecord;
+}
+
+const initialState: InitialState = {
+  loading: false,
+  error: "",
+  record: {
+    created: "",
+    fail: false,
+    token: "",
+    user_id: "",
+    username: "",
+  },
+};
 
 export const authUser = createAsyncThunk(
   "auth/authUser",
@@ -23,6 +49,8 @@ export const authUser = createAsyncThunk(
         }
       );
       const data = await response.json();
+      AsyncStorage.setItem("token", data.record.token);
+
       return data;
     } catch (error) {
       log.error(error);
@@ -33,14 +61,16 @@ export const authUser = createAsyncThunk(
 
 export const authSlice = createSlice({
   name: "auth",
-  initialState: {
-    user: {},
-    loading: false,
-    error: "",
-  },
+  initialState: initialState,
   reducers: {
     clearUserState: (state) => {
-      state.user = {};
+      state.record = {
+        created: "",
+        fail: false,
+        token: "",
+        user_id: "",
+        username: "",
+      };
     },
   },
   extraReducers: (builder) => {
@@ -48,7 +78,7 @@ export const authSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(authUser.fulfilled, (state, action) => {
-      state.user = action.payload;
+      state.record = action.payload.record;
       state.loading = false;
     });
     builder.addCase(authUser.rejected, (state, action) => {
@@ -58,5 +88,5 @@ export const authSlice = createSlice({
   },
 });
 
-// export const authActions = authSlice.actions;
+export const { clearUserState } = authSlice.actions;
 export default authSlice.reducer;
