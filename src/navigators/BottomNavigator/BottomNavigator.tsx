@@ -19,7 +19,12 @@ const Tab = createBottomTabNavigator<AppBottomParamList>();
 
 export const BottomNavigator = () => {
   return (
-    <Tab.Navigator tabBar={(props) => <IslanNavMenu {...props} />}>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      tabBar={(props) => <IslanNavMenu {...props} />}
+    >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Events" component={EventsScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
