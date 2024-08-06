@@ -17,6 +17,7 @@ type CircularButtonProps = {
   iconColor: ColorPallet;
   touchableProps?: TouchableOpacityProps;
   iconElement?: React.ReactNode;
+  customStyle?: StyleProp<ViewStyle>;
 };
 
 export const CircleButton = (props: CircularButtonProps) => {
@@ -26,6 +27,7 @@ export const CircleButton = (props: CircularButtonProps) => {
     iconColor = "primary_100",
     touchableProps,
     iconElement,
+    customStyle,
   } = props;
 
   const container: StyleProp<ViewStyle> = {
@@ -38,7 +40,11 @@ export const CircleButton = (props: CircularButtonProps) => {
   };
 
   return (
-    <TouchableOpacity style={container} activeOpacity={0.8} {...touchableProps}>
+    <TouchableOpacity
+      style={[container, customStyle]}
+      activeOpacity={0.8}
+      {...touchableProps}
+    >
       {iconElement || (
         <Entypo name="plus" size={spacing[size]} color={pallet[iconColor]} />
       )}

@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { StyleSheet, View } from "react-native";
 import MapView from "react-native-maps";
+import { CircleButton } from "../../../.storybook/stories/CircleButton/CircleButton";
 export const HomeScreen = () => {
   return (
     <View style={{ flex: 1 }}>
@@ -13,8 +14,21 @@ export const HomeScreen = () => {
           longitudeDelta: 0.0421,
         }}
       />
+      <CircleButton
+        bgColor="primary_40"
+        size="xl"
+        iconColor="primary_80"
+        touchableProps={{ onPress: () => {} }}
+        customStyle={styles.btnPosition}
+      />
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  btnPosition: {
+    position: "absolute",
+    bottom: 120,
+    right: 15,
+  },
+});
