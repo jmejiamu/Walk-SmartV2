@@ -20,6 +20,16 @@ const es: Translations = {
     signUp: "Registrarse",
     button: "Iniciar sesión",
   },
+  homeScreen: {
+    addEventSheet: {
+      title: "Título del evento",
+      subTitle: "Descripción del evento",
+      inputEventTitle: "Grupo de lectura",
+      inputEventDescription: "Libros de Javascript",
+      submitButton: "Agregar evento",
+      cancelButton: "Cancelar",
+    },
+  },
 };
 
 export default es;
