@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { pallet } from "../../themes";
+import { pallet, spacing } from "../../themes";
 import { CustomMenuIcon } from "../CustomMenuIcon";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     right: 0,
     backgroundColor: pallet.primary_80,
     borderTopWidth: 0,
-    marginHorizontal: 15,
+    marginHorizontal: spacing.md,
     borderRadius: 75 / 2,
     marginBottom: 20,
     height: 75,

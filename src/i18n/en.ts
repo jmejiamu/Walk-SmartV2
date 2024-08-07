@@ -18,6 +18,16 @@ const en = {
     signUp: "Sign Up",
     button: "Sign In",
   },
+  homeScreen: {
+    addEventSheet: {
+      title: "Event's title",
+      subTitle: "Event's Description",
+      inputEventTitle: "Reading group",
+      inputEventDescription: "Javascript books",
+      submitButton: "Add Event",
+      cancelButton: "Cancel",
+    },
+  },
 };
 
 export default en;
