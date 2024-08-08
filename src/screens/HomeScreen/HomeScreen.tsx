@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import { Alert, StyleSheet, Text, View } from "react-native";
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import { CircleButton } from "../../../.storybook/stories/CircleButton/CircleButton";
 import { fontSize, pallet, spacing } from "../../themes";
 import BottomSheet, {
@@ -18,6 +18,7 @@ import { log } from "../../utils";
 import { useDispatch } from "react-redux";
 import { userInfoData } from "../../redux/userDataSlice/userDataSlice";
 import { addEvent } from "../../redux/AddEventsSlice/AddEventsSlice";
+import { allUsersEvents } from "../../redux/allEventsSlice/allEventsSlice";
 export const HomeScreen = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ["50%"], []);
@@ -39,13 +40,15 @@ export const HomeScreen = () => {
   };
   const { formData, handleChange, resetForm } = useForm(initialState);
 
-  const { location, errorMsg, status } = useLocation();
+  const { location, errorMsg, status, fetchLocation, loading } = useLocation();
+
   const dispatch = useDispatch<AppDispatch>();
 
   const { isAuthenticated } = useSelector(
     (state: RootState) => state.verifyAuth
   );
   const { userInfo } = useSelector((state: RootState) => state.userInfo);
+  const { events } = useSelector((state: RootState) => state.eventByUserId);
 
   const onHandleSubmit = () => {
     try {
@@ -81,20 +84,48 @@ export const HomeScreen = () => {
   };
 
   useEffect(() => {
-    dispatch(userInfoData());
-  }, [dispatch]);
+    fetchLocation();
+  }, []);
+
+  useEffect(() => {
+    if (status === "granted") {
+      dispatch(userInfoData());
+    }
+  }, [status, dispatch]);
+
+  useEffect(() => {
+    if (userInfo) {
+      dispatch(allUsersEvents());
+    }
+  }, [userInfo, dispatch]);
 
   return (
     <View style={{ flex: 1 }}>
       <MapView
+        showsUserLocation
         style={StyleSheet.absoluteFill}
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
+        region={{
+          latitude: location?.coords?.latitude || 0,
+          longitude: location?.coords?.longitude || 0,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-      />
+      >
+        {events &&
+          events.map((event, index) => {
+            return (
+              <Marker
+                key={index}
+                coordinate={{
+                  latitude: event.latitude,
+                  longitude: event.longitude,
+                }}
+                title={event.event_title}
+                description={event.event_description}
+              />
+            );
+          })}
+      </MapView>
       <CircleButton
         bgColor="primary_40"
         size="xl"
