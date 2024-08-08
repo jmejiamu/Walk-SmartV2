@@ -26,7 +26,16 @@ module.exports = {
       },
       package: "com.anonymous.smartwalk",
     },
-    plugins: ["expo-localization"],
+    plugins: [
+      "expo-localization",
+      [
+        "expo-location",
+        {
+          locationAlwaysAndWhenInUsePermission:
+            "Allow $(PRODUCT_NAME) to use your location.",
+        },
+      ],
+    ],
     web: {
       favicon: "./assets/favicon.png",
     },

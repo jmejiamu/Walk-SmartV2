@@ -1,10 +1,14 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authSlice from "../auth/authSlice";
 import verifyAuthenticationSlice from "../verifyAuthentication/verifyAuthentication";
+import userDataSlice from "../userDataSlice/userDataSlice";
+import AddEventsSlice from "../AddEventsSlice/AddEventsSlice";
 
 const rootReducer = combineReducers({
   userAuth: authSlice,
   verifyAuth: verifyAuthenticationSlice,
+  userInfo: userDataSlice,
+  addEvent: AddEventsSlice,
 });
 export type RootState = ReturnType<typeof rootReducer>;
 
