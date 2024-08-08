@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo, useRef } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useMemo, useRef } from "react";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import MapView from "react-native-maps";
 import { CircleButton } from "../../../.storybook/stories/CircleButton/CircleButton";
 import { fontSize, pallet, spacing } from "../../themes";
@@ -11,7 +11,13 @@ import BottomSheet, {
 import { translate } from "../../i18n";
 import { Input } from "../../../.storybook/stories/TextInput/Input";
 import { MyButton } from "../../../.storybook/stories/Button/Button";
-import { useForm } from "../../hooks";
+import { useForm, useLocation } from "../../hooks";
+import { useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../redux";
+import { log } from "../../utils";
+import { useDispatch } from "react-redux";
+import { userInfoData } from "../../redux/userDataSlice/userDataSlice";
+import { addEvent } from "../../redux/AddEventsSlice/AddEventsSlice";
 export const HomeScreen = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ["50%"], []);
@@ -32,6 +38,52 @@ export const HomeScreen = () => {
     description: "",
   };
   const { formData, handleChange, resetForm } = useForm(initialState);
+
+  const { location, errorMsg, status } = useLocation();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { isAuthenticated } = useSelector(
+    (state: RootState) => state.verifyAuth
+  );
+  const { userInfo } = useSelector((state: RootState) => state.userInfo);
+
+  const onHandleSubmit = () => {
+    try {
+      if (status !== "granted") {
+        Alert.alert("Error", "Please enable location services");
+        return;
+      }
+
+      if (
+        isAuthenticated &&
+        formData.title.length > 0 &&
+        formData.description.length > 0
+      ) {
+        dispatch(
+          addEvent({
+            event_title: formData.title,
+            event_description: formData.description,
+            user_id: userInfo.user_id,
+            latitude: location!.coords?.latitude,
+            longitude: location!.coords?.longitude,
+            user_name: userInfo.fullName,
+          })
+        );
+        resetForm();
+      } else {
+        Alert.alert("Error", "Please fill out the form");
+        return;
+      }
+    } catch (error) {
+      log.error(error);
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    dispatch(userInfoData());
+  }, [dispatch]);
+
   return (
     <View style={{ flex: 1 }}>
       <MapView
@@ -98,7 +150,7 @@ export const HomeScreen = () => {
                 textColor="primary_15"
                 bgColor="primary_60"
                 containerStyle={{}}
-                onPress={() => {}}
+                onPress={() => onHandleSubmit()}
               />
             </View>
             <View style={styles.btnDivider} />
