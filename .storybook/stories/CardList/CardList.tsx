@@ -15,11 +15,13 @@ import { AntDesign } from "@expo/vector-icons";
 export type ColorPallet = Pallet;
 
 export type CardListProps = {
-  leftElement: React.ReactNode;
+  leftElement?: React.ReactNode;
   title: string;
-  rightElement: React.ReactNode;
+  rightElement?: React.ReactNode;
   bgColor: ColorPallet;
   customTxtStyle?: StyleProp<TextStyle>;
+  rightElementColor?: string;
+  leftElementColor?: string;
 };
 
 export const CardList = (props: CardListProps) => {
@@ -29,6 +31,8 @@ export const CardList = (props: CardListProps) => {
     rightElement,
     customTxtStyle,
     bgColor = "secondary_95",
+    leftElementColor,
+    rightElementColor,
   } = props;
 
   const container: StyleProp<ViewStyle> = {
@@ -53,13 +57,17 @@ export const CardList = (props: CardListProps) => {
           <MaterialIcons
             name="event-available"
             size={36}
-            color={pallet["secondary_40"]}
+            color={(pallet["secondary_40"], leftElementColor)}
           />
         )}
         <Text style={[textStyle, customTxtStyle]}>{title}</Text>
       </View>
       {rightElement || (
-        <AntDesign name="right" size={36} color={pallet["secondary_40"]} />
+        <AntDesign
+          name="right"
+          size={25}
+          color={(pallet["secondary_40"], rightElementColor)}
+        />
       )}
     </TouchableOpacity>
   );

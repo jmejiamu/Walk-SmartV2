@@ -48,7 +48,7 @@ export const HomeScreen = () => {
     (state: RootState) => state.verifyAuth
   );
   const { userInfo } = useSelector((state: RootState) => state.userInfo);
-  const { events } = useSelector((state: RootState) => state.eventByUserId);
+  const { events } = useSelector((state: RootState) => state.allEvents);
 
   const onHandleSubmit = () => {
     try {
